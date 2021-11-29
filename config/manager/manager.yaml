@@ -27,7 +27,7 @@ spec:
       containers:
       - args:
         - --leader-elect
-        - --leader-election-id=helm
+        - --leader-election-id=baicell-helm-operator
         image: controller:latest
         name: manager
         securityContext:
