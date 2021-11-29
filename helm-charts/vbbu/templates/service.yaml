@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "vbbu.fullname" . }}
-  labels:
-    {{- include "vbbu.labels" . | nindent 4 }}
+  name: du-http 
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - name: http
+    port: 80
+    targetPort: 80 
+    nodePort: {{ .Values.service.nodePort }}
+  type: NodePort 
   selector:
-    {{- include "vbbu.selectorLabels" . | nindent 4 }}
+    app: du-pod1
