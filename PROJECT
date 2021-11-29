@@ -1,0 +1,17 @@
+domain: baicell.com
+layout:
+- helm.sdk.operatorframework.io/v1
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+  sdk.x-openshift.io/v1: {}
+projectName: helm
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: baicell.com
+  group: apps
+  kind: VBBU
+  version: v1alpha1
+version: "3"
