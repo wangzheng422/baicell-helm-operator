@@ -1,0 +1,46 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: baicell-helm-operator.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: {}
+  description: baicell vRAN application including fpga driver, vCU, vDU
+  displayName: baicell vBBU
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - baicell
+  - vbbu
+  - vran
+  - vcu
+  - vdu
+  links:
+  - name: Baicell Helm Operator
+    url: https://baicell-helm-operator.domain
+  maintainers:
+  - email: wangzheng422@foxmail.com
+    name: wangzheng
+  maturity: alpha
+  provider:
+    name: baicell
+    url: na.baicell.com
+  version: 0.0.0
