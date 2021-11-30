@@ -16,7 +16,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -38,6 +38,10 @@ securityContext: {}
 
 service:
   nodePort: 31071
+
+net-attach-def:
+  xeth:
+    subnet: "192.168.160.0/24"
 
 ingress:
   enabled: false

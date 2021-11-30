@@ -1,61 +1,89 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "vbbu.fullname" . }}
+  name: du-deployment1
   labels:
-    {{- include "vbbu.labels" . | nindent 4 }}
+    app: du-deployment1
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
   selector:
     matchLabels:
-      {{- include "vbbu.selectorLabels" . | nindent 6 }}
+      app: du-pod1
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "vbbu.selectorLabels" . | nindent 8 }}
+        app: du-pod1
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+          { "name": "host-device-du-ens",
+            "interface": "veth11" },
+          { "name": "host-device-du",
+            "interface": "xeth" }
+          ]'
+      cpu-load-balancing.crio.io: "true"
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "vbbu.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      runtimeClassName: performance-wzh-performanceprofile
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+      - name: du-container1
+        image: "registry.ocp4.redhat.ren:5443/ocp4/du:v1-1623-wzh-01"
+        imagePullPolicy: IfNotPresent
+        tty: true
+        stdin: true
+        env:
+          - name: duNetProviderDriver
+            value: "host-netdevice"
+        # command: ["/usr/sbin/init"]
+        # - sleep
+        # - infinity
+        securityContext:
+            privileged: true
+            capabilities:
+                add:
+                - CAP_SYS_ADMIN
+        volumeMounts:
+          - mountPath: /hugepages
+            name: hugepage
+          - name: lib-modules
+            mountPath: /lib/modules
+          - name: src
+            mountPath: /usr/src
+          - name: dev
+            mountPath: /dev
+          - name: cache-volume
+            mountPath: /dev/shm
+          - name: license-volume
+            mountPath: /baicell/lic
+        resources:
+          requests:
+            cpu: 14
+            memory: 64Gi
+            hugepages-1Gi: 16Gi
+          limits:
+            cpu: 14
+            memory: 64Gi
+            hugepages-1Gi: 16Gi
+      volumes:
+        - name: hugepage
+          emptyDir:
+            medium: HugePages
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: src
+          hostPath:
+            path: /usr/src
+        - name: dev
+          hostPath:
+            path: "/dev"
+        - name: cache-volume
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Gi
+        - name: license-volume
+          configMap:
+            name: license.for.baicell
+            items:
+            - key: license
+              path: license.lic
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        node-role.kubernetes.io/master: ""
