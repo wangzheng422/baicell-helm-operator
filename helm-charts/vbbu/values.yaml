@@ -9,6 +9,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
+  uri: "registry.ocp4.redhat.ren:5443/ocp4/du:v1-1623-wzh-01"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,9 +40,41 @@ securityContext: {}
 service:
   nodePort: 31071
 
-net-attach-def:
+net_attach_def:
   xeth:
-    subnet: "192.168.160.0/24"
+    name: "host-device-du"
+    config: '{
+      "cniVersion": "0.3.0",
+      "type": "host-device",
+      "device": "xeth",
+      "ipam": {
+        "type": "host-local",
+        "subnet": "192.168.160.0/24",
+        "gateway": "192.168.160.254",
+        "rangeStart": "192.168.160.1",
+        "rangeEnd": "192.168.160.1"
+      }}'
+  enp:
+    name: "host-device-du-ens"
+    config: '{
+      "cniVersion": "0.3.0",
+      "type": "host-device",
+      "device": "enp103s0f0",
+      "ipam": {
+        "type": "host-local",
+        "subnet": "192.168.12.0/24",
+        "rangeStart": "192.168.12.105",
+        "rangeEnd": "192.168.12.106"
+      }}'
+
+deploy:
+  network: '[
+          { "name": "host-device-du-ens",
+            "interface": "veth11" },
+          { "name": "host-device-du",
+            "interface": "xeth" }
+          ]'
+  runtimeClassName: performance-wzh-performanceprofile
 
 ingress:
   enabled: false
@@ -78,7 +111,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
+nodeSelector: 
+  node-role.kubernetes.io/master: ""
 
 tolerations: []
 

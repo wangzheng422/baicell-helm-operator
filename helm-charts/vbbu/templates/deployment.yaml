@@ -14,18 +14,13 @@ spec:
       labels:
         app: du-pod1
       annotations:
-        k8s.v1.cni.cncf.io/networks: '[
-          { "name": "host-device-du-ens",
-            "interface": "veth11" },
-          { "name": "host-device-du",
-            "interface": "xeth" }
-          ]'
+        k8s.v1.cni.cncf.io/networks: {{ .Values.deploy.network | quote }}
       cpu-load-balancing.crio.io: "true"
     spec:
-      runtimeClassName: performance-wzh-performanceprofile
+      runtimeClassName: {{ .Values.deploy.runtimeClassName }}
       containers:
       - name: du-container1
-        image: "registry.ocp4.redhat.ren:5443/ocp4/du:v1-1623-wzh-01"
+        image: {{ .Values.image.uri | quote }}
         imagePullPolicy: IfNotPresent
         tty: true
         stdin: true
@@ -85,5 +80,7 @@ spec:
             items:
             - key: license
               path: license.lic
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-        node-role.kubernetes.io/master: ""
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -38,7 +38,7 @@ BUNDLE_IMG ?= $(IMAGE_TAG_BASE)-bundle:v$(VERSION)
 
 # Image URL to use all building/pushing image targets
 # IMG ?= controller:latest
-IMG ?= quay.io/baicell/baicell-helm-operator:latest
+IMG ?= quay.io/baicell/baicell-helm-operator:v01
 
 all: docker-build
 

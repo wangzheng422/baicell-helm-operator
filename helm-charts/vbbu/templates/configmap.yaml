@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: license.for.baicell
+data:
+  license: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <License xmlns="http://www.baicells.com/product/fap">
+      <summary>
+        <contractNumber>LICENSE202111032</contractNumber>
+        <version>1</version>
+        <code>FAP</code>
+        <author>zhangjiangmei</author>
+        <generateDate>20211105</generateDate>
+        <seqNum>10</seqNum>
+      </summary>
+      <product>
+        <capacityKey>
+          <id>FAP017</id>
+          <description>5G BBU</description>
+          <validPeriod>180</validPeriod>
+        </capacityKey>
+      </product>
+    </License>
+
+    <checksum>
+
+    </checksum>
