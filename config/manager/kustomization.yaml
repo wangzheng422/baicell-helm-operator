@@ -13,4 +13,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: quay.io/baicell/baicell-helm-operator
-  newTag: latest
+  newTag: v01

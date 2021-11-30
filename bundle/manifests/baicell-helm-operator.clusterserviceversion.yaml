@@ -172,7 +172,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=baicell-helm-operator
-                image: quay.io/baicell/baicell-helm-operator:latest
+                image: quay.io/baicell/baicell-helm-operator:v01
                 livenessProbe:
                   httpGet:
                     path: /healthz
