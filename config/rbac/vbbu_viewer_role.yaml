@@ -1,0 +1,20 @@
+# permissions for end users to view vbbus.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vbbu-viewer-role
+rules:
+- apiGroups:
+  - apps.baicell.com
+  resources:
+  - vbbus
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps.baicell.com
+  resources:
+  - vbbus/status
+  verbs:
+  - get

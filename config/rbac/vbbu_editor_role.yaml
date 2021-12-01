@@ -1,0 +1,24 @@
+# permissions for end users to edit vbbus.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vbbu-editor-role
+rules:
+- apiGroups:
+  - apps.baicell.com
+  resources:
+  - vbbus
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps.baicell.com
+  resources:
+  - vbbus/status
+  verbs:
+  - get

@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: du-deployment1
+  labels:
+    app: du-deployment1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: du-pod1
+  template:
+    metadata:
+      labels:
+        app: du-pod1
+      annotations:
+        k8s.v1.cni.cncf.io/networks: {{ .Values.deploy.network | quote }}
+      cpu-load-balancing.crio.io: "true"
+    spec:
+      runtimeClassName: {{ .Values.deploy.runtimeClassName }}
+      containers:
+      - name: du-container1
+        image: {{ .Values.image.uri | quote }}
+        imagePullPolicy: IfNotPresent
+        tty: true
+        stdin: true
+        env:
+          - name: duNetProviderDriver
+            value: "host-netdevice"
+        # command: ["/usr/sbin/init"]
+        # - sleep
+        # - infinity
+        securityContext:
+            privileged: true
+            capabilities:
+                add:
+                - CAP_SYS_ADMIN
+        volumeMounts:
+          - mountPath: /hugepages
+            name: hugepage
+          - name: lib-modules
+            mountPath: /lib/modules
+          - name: src
+            mountPath: /usr/src
+          - name: dev
+            mountPath: /dev
+          - name: cache-volume
+            mountPath: /dev/shm
+          - name: license-volume
+            mountPath: /baicell/lic
+        resources:
+          requests:
+            cpu: 14
+            memory: 64Gi
+            hugepages-1Gi: 16Gi
+          limits:
+            cpu: 14
+            memory: 64Gi
+            hugepages-1Gi: 16Gi
+      volumes:
+        - name: hugepage
+          emptyDir:
+            medium: HugePages
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: src
+          hostPath:
+            path: /usr/src
+        - name: dev
+          hostPath:
+            path: "/dev"
+        - name: cache-volume
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Gi
+        - name: license-volume
+          configMap:
+            name: license.for.baicell
+            items:
+            - key: license
+              path: license.lic
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

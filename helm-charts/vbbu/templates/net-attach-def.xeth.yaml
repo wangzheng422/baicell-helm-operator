@@ -1,0 +1,6 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: {{ .Values.net_attach_def.xeth.name}}
+spec:
+  config: {{ .Values.net_attach_def.xeth.config | quote }}

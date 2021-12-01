@@ -1,0 +1,6 @@
+# Use the 'create api' subcommand to add watches to this file.
+- group: apps.baicell.com
+  version: v1alpha1
+  kind: VBBU
+  chart: helm-charts/vbbu
+#+kubebuilder:scaffold:watch
