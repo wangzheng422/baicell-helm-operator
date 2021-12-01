@@ -25,7 +25,7 @@ jobs:
 
       - uses: azure/setup-helm@v1
         with:
-          version: 'latest' # default is latest stable
+          version: 'v3.7.1' # default is latest stable
         id: install
 
       # Runs a set of helm commands using the runners shell
