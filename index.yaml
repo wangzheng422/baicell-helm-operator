@@ -3,12 +3,12 @@ entries:
   vbbu:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-01T13:35:35.964358477Z"
+    created: "2021-12-01T13:39:19.96029521Z"
     description: A Helm chart for Kubernetes
-    digest: 362f3ddd24bf1e441d7952aa11fa3615a15fa24f04768dfd075a6cb48ebd9555
+    digest: b790d22ad5640d8361967e5675c1d94c9cbde12ec3e4fd288c254e774893d972
     name: vbbu
     type: application
     urls:
-    - https://wangzheng422.github.io/baicell-helm-operator/helm-repo/vbbu-0.1.0.tgz
+    - https://wangzheng422.github.io/baicell-helm-operator/vbbu-0.1.0.tgz
     version: 0.1.0
-generated: "2021-12-01T13:35:35.963227376Z"
+generated: "2021-12-01T13:39:19.959432645Z"
