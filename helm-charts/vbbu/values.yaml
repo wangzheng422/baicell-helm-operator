@@ -43,6 +43,11 @@ deploy:
             "interface": "xeth" }
           ]'
   runtimeClassName: performance-wzh-performanceprofile
+  cpu: 14
+  memory: "64Gi"
+  hugepages-1Gi: "16Gi"
+  cache-memory: "16Gi"
+
 
 nodeSelector: 
   node-role.kubernetes.io/master: ""

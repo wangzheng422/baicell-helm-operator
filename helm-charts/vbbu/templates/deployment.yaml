@@ -50,13 +50,13 @@ spec:
             mountPath: /baicell/lic
         resources:
           requests:
-            cpu: 14
-            memory: 64Gi
-            hugepages-1Gi: 16Gi
+            cpu: {{ .Values.deploy.cpu}}
+            memory: {{ .Values.deploy.memory }}
+            hugepages-1Gi: {{ .Values.deploy.hugepages-1Gi }}
           limits:
-            cpu: 14
-            memory: 64Gi
-            hugepages-1Gi: 16Gi
+            cpu: {{ .Values.deploy.cpu}}
+            memory: {{ .Values.deploy.memory }}
+            hugepages-1Gi: {{ .Values.deploy.hugepages-1Gi }}
       volumes:
         - name: hugepage
           emptyDir:
@@ -73,7 +73,7 @@ spec:
         - name: cache-volume
           emptyDir:
             medium: Memory
-            sizeLimit: 16Gi
+            sizeLimit: {{ .Values.deploy.cache-memory }}
         - name: license-volume
           configMap:
             name: license.for.baicell
