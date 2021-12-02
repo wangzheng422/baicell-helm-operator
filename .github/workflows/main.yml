@@ -77,6 +77,18 @@ jobs:
 
           make bundle IMG=ghcr.io/wangzheng422/baicell-helm-operator:$OPERATOR_VERION
 
-          make bundle-build bundle-push catalog-build catalog-push \
-              BUNDLE_IMG=ghcr.io/wangzheng422/baicell-helm-operator:bundle-$OPERATOR_VERION \
+          make bundle-build BUNDLE_IMG=ghcr.io/wangzheng422/baicell-helm-operator:bundle-$OPERATOR_VERION \
               CATALOG_IMG=ghcr.io/wangzheng422/baicell-helm-operator:catalog-$OPERATOR_VERION
+
+          make bundle-push BUNDLE_IMG=ghcr.io/wangzheng422/baicell-helm-operator:bundle-$OPERATOR_VERION \
+              CATALOG_IMG=ghcr.io/wangzheng422/baicell-helm-operator:catalog-$OPERATOR_VERION
+          
+          make catalog-build BUNDLE_IMG=ghcr.io/wangzheng422/baicell-helm-operator:bundle-$OPERATOR_VERION \
+              CATALOG_IMG=ghcr.io/wangzheng422/baicell-helm-operator:catalog-$OPERATOR_VERION
+
+          make catalog-push BUNDLE_IMG=ghcr.io/wangzheng422/baicell-helm-operator:bundle-$OPERATOR_VERION \
+              CATALOG_IMG=ghcr.io/wangzheng422/baicell-helm-operator:catalog-$OPERATOR_VERION
+
+          # make bundle-build bundle-push catalog-build catalog-push \
+          #     BUNDLE_IMG=ghcr.io/wangzheng422/baicell-helm-operator:bundle-$OPERATOR_VERION \
+          #     CATALOG_IMG=ghcr.io/wangzheng422/baicell-helm-operator:catalog-$OPERATOR_VERION
