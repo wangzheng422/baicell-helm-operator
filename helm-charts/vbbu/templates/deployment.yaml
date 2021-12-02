@@ -27,7 +27,7 @@ spec:
         env:
           - name: duNetProviderDriver
             value: "host-netdevice"
-        # command: ["/usr/sbin/init"]
+        command: ["/usr/sbin/init"]
         # - sleep
         # - infinity
         securityContext:
