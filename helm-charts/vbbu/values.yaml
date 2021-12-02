@@ -47,7 +47,7 @@ deploy:
   runtimeClassName: performance-wzh-performanceprofile
   cpu: 14
   memory: "64Gi"
-  hugepages-1Gi: "16Gi"
+  hugepages_1Gi: "16Gi"
   cache-memory: "16Gi"
   
   driver:

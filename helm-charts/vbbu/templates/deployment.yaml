@@ -52,11 +52,11 @@ spec:
           requests:
             cpu: {{ .Values.deploy.cpu}}
             memory: {{ .Values.deploy.memory }}
-            hugepages-1Gi: {{ .Values.deploy.hugepages-1Gi }}
+            hugepages-1Gi: {{ .Values.deploy.hugepages_1Gi }}
           limits:
             cpu: {{ .Values.deploy.cpu}}
             memory: {{ .Values.deploy.memory }}
-            hugepages-1Gi: {{ .Values.deploy.hugepages-1Gi }}
+            hugepages-1Gi: {{ .Values.deploy.hugepages_1Gi }}
       volumes:
         - name: hugepage
           emptyDir:
