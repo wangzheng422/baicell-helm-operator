@@ -15,7 +15,7 @@ spec:
         app: du-pod1
       annotations:
         k8s.v1.cni.cncf.io/networks: {{ .Values.deploy.network | quote }}
-      cpu-load-balancing.crio.io: "true"
+      # cpu-load-balancing.crio.io: "true"
     spec:
       runtimeClassName: {{ .Values.deploy.runtimeClassName }}
       containers:
