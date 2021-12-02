@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fpga-driver
+  # namespace: default
+  labels:
+    app: fpga-driver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fpga-driver
+  template:
+    metadata:
+      labels:
+        app: fpga-driver
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - fpga-driver
+              topologyKey: "kubernetes.io/hostname"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      # restartPolicy: Never
+      initContainers:
+      - name: copy
+        image: {{ .Values.image.driver_uri | quote }}
+        command: ["/bin/sh", "-c", {{ .Values.deploy.driver.copy_script | quote }}]
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: driver-files
+          mountPath: /baicell/driver/
+      containers:
+      - name: driver
+        image: {{ .Values.image.support_tool_uri | quote }}
+        # imagePullPolicy: Always
+        command: [ "/usr/bin/bash","-c", {{ .Values.deploy.driver.load_script | quote }} ]
+        # command: [ "/usr/bin/bash","-c","tail -f /dev/null || true " ]
+        resources:
+          requests:
+            cpu: 10m
+            memory: 20Mi
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        volumeMounts:
+        - name: driver-files
+          mountPath: /baicell/driver/
+        - name: host
+          mountPath: /host
+      volumes: 
+      - name: driver-files
+        emptyDir: {}
+      - name: host
+        hostPath:
+          path: /
+          type: Directory
