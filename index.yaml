@@ -3,12 +3,12 @@ entries:
   vbbu:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-12-02T08:49:06.951131862Z"
+    created: "2021-12-02T09:31:20.018823414Z"
     description: baicell vRAN application including fpga driver, vCU, vDU
-    digest: aad595f3a0463a5dcd7fdf9a158526470b73a35bc07f12b0eca96cd6566d3744
+    digest: 75fa42dea827f154b633ff7e2a27512b7006f1d4d2156bb9db4c69edce32ef75
     name: vbbu
     type: application
     urls:
     - https://wangzheng422.github.io/baicell-helm-operator/vbbu-0.1.0.tgz
     version: 0.1.0
-generated: "2021-12-02T08:49:06.950211041Z"
+generated: "2021-12-02T09:31:20.018057005Z"
