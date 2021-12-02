@@ -73,7 +73,7 @@ spec:
         - name: cache-volume
           emptyDir:
             medium: Memory
-            sizeLimit: {{ .Values.deploy.cache-memory }}
+            sizeLimit: {{ .Values.deploy.cache_memory }}
         - name: license-volume
           configMap:
             name: license.for.baicell

@@ -48,7 +48,7 @@ deploy:
   cpu: 14
   memory: "64Gi"
   hugepages_1Gi: "16Gi"
-  cache-memory: "16Gi"
+  cache_memory: "16Gi"
   
   driver:
     copy_script: "tar zvxf /BaiBBU_DXSS_1.0.18--4.18.0-305.19.1.PKG --strip 1 -C /baicell/driver/ && /bin/cp -f /ocp4.install.sh /baicell/driver/ "
