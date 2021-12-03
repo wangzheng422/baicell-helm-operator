@@ -6,7 +6,7 @@ metadata:
   labels:
     app: fpga-driver
 spec:
-  replicas: 1
+  replicas: {{ .Values.deploy.replicas}}
   selector:
     matchLabels:
       app: fpga-driver

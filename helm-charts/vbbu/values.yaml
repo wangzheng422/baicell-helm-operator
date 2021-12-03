@@ -38,6 +38,7 @@ net_attach_def:
       }}'
 
 deploy:
+  replicas: 1
   network: '[
           { "name": "host-device-du-ens",
             "interface": "veth11" },

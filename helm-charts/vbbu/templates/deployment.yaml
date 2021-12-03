@@ -5,7 +5,7 @@ metadata:
   labels:
     app: du-deployment1
 spec:
-  replicas: 1
+  replicas: {{ .Values.deploy.replicas}}
   selector:
     matchLabels:
       app: du-pod1
@@ -17,6 +17,16 @@ spec:
         k8s.v1.cni.cncf.io/networks: {{ .Values.deploy.network | quote }}
       # cpu-load-balancing.crio.io: "true"
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - fpga-driver
+              topologyKey: "kubernetes.io/hostname"
       runtimeClassName: {{ .Values.deploy.runtimeClassName }}
       containers:
       - name: du-container1
