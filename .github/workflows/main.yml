@@ -29,12 +29,23 @@ jobs:
         id: install
 
       # Runs a set of helm commands using the runners shell
-      - name: Run a multi-line script
+      - name: Run a multi-line script for helm chart package
         run: |
           cd helm-repo
           helm package ../helm-charts/*
           helm repo index --url https://wangzheng422.github.io/baicell-helm-operator/ .
+          cd ..
       
+      - name: Convert Markdown to HTML
+        uses: natescherer/markdown-to-html-with-github-style-action@v1
+        with:
+          path: README.md
+          outputpath: helm-repo
+      
+      - name: Run a multi-line script for rename html
+        run: |
+          mv helm-repo/README.html helm-repo/index.html
+
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
@@ -59,13 +70,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Login to redhat
         uses: docker/login-action@v1
         with:
           registry: registry.redhat.io
           username: ${{ secrets.REDHAT_REGISTRY_USER }}
           password: ${{ secrets.REDHAT_REGISTRY_PWD }}
-      - name: Run a multi-line script
+
+      - name: Run a multi-line script for bundle and catalog
         run: |
           wget https://mirror.openshift.com/pub/openshift-v4/clients/operator-sdk/latest/operator-sdk-linux-x86_64.tar.gz
           tar zvxf operator-sdk-linux-x86_64.tar.gz
