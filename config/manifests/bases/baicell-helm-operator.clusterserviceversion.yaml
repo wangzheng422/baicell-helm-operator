@@ -35,7 +35,7 @@ spec:
   - vdu
   links:
   - name: Baicell Helm Operator
-    url: https://baicell-helm-operator.domain
+    url: https://wangzheng422.github.io/baicell-helm-operator
   maintainers:
   - email: wangzheng422@foxmail.com
     name: wangzheng

@@ -140,6 +140,12 @@ spec:
           - subjectaccessreviews
           verbs:
           - create
+        - apiGroups:
+          - k8s.cni.cncf.io
+          resources:
+          - networkattachmentdefinitions
+          verbs:
+          - '*'
         serviceAccountName: baicell-helm-operator-controller-manager
       deployments:
       - name: baicell-helm-operator-controller-manager
