@@ -29,7 +29,7 @@
 oc create configmap license.for.baicell --from-file=license=./3496531EC238AD91DED6DBA5BD6B.lic -o yaml --dry-run=client | oc apply -f -
 ```
 
-## 配置
+## 配置helm chart集
 
 这里介绍一下，如何添加自定义helm chart集，只是需要添加一个配置
 
@@ -99,4 +99,45 @@ operator参数，默认的就好，不用修改。
 
 ![](imgs/2021-12-03-15-37-55.png)
 
+## 配置自定义operator hub源
 
+本软件在没有上架官方operator hub之前，是需要用自定义的operator hub源来导入的，以下是配置，注意其中的镜像，需要选取最新的，[镜像列表在这里](https://github.com/wangzheng422/baicell-helm-operator/pkgs/container/baicell-helm-operator)
+
+```bash
+# on openshift helper node
+cat << EOF > /data/install/baicell.catalog.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: baicell
+  namespace: openshift-marketplace
+spec:
+  displayName: Baicell
+  publisher: Baicell
+  sourceType: grpc
+  image: ghcr.io/wangzheng422/baicell-helm-operator:catalog-2021-12-03-0802
+  updateStrategy:
+    registryPoll:
+      interval: 10m
+EOF
+oc create -f /data/install/baicell.catalog.yaml
+# to restore
+oc delete -f /data/install/baicell.catalog.yaml
+```
+
+# 本项目代码介绍
+
+本项目，是使用脚手架创建的，创建命令如下
+```bash
+operator-sdk init \
+    --plugins=helm \
+    --project-name baicell-helm-operator \
+    --domain=baicell.com \
+    --group=apps \
+    --version=v1alpha1 \
+    --kind=VBBU 
+```
+
+helm相关的脚本在 helm-charts目录中。operator相关的配置，在bundle目录中。
+
+本项目采用github action自动编译和发布。自动编译出helm charts，并发布到 https://wangzheng422.github.io/baicell-helm-operator/ . 同时会编译出operator需要的docker镜像，并[发布到package中](https://github.com/wangzheng422/baicell-helm-operator/pkgs/container/baicell-helm-operator)。

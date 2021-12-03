@@ -59,4 +59,12 @@ rules:
   resources:
   - "deployments"
 
+# for network attachment definition
+- apiGroups:
+  - k8s.cni.cncf.io
+  resources:
+  - networkattachmentdefinitions
+  verbs:
+  - '*'
+  
 #+kubebuilder:scaffold:rules
