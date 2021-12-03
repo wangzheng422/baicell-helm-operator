@@ -63,8 +63,8 @@ rules:
 - apiGroups:
   - k8s.cni.cncf.io
   resources:
-  - networkattachmentdefinitions
+  - network-attachment-definitions
   verbs:
   - '*'
-  
+
 #+kubebuilder:scaffold:rules

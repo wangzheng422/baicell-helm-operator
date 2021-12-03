@@ -115,7 +115,7 @@ spec:
   displayName: Baicell
   publisher: Baicell
   sourceType: grpc
-  image: ghcr.io/wangzheng422/baicell-helm-operator:catalog-2021-12-03-0802
+  image: ghcr.io/wangzheng422/baicell-helm-operator:catalog-2021-12-03-0823
   updateStrategy:
     registryPoll:
       interval: 10m
@@ -123,6 +123,7 @@ EOF
 oc create -f /data/install/baicell.catalog.yaml
 # to restore
 oc delete -f /data/install/baicell.catalog.yaml
+
 ```
 
 # 本项目代码介绍
