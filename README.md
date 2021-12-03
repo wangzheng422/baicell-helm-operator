@@ -2,6 +2,10 @@
 
 本项目是一个helm operator的演示项目，用来展现，如何在openshift中，是用helm chart, helm operator制作和部署应用。
 
+# 安装准备
+
+本项目预期在openshift之上，来安装vRAN应用，需要[参考这里](https://github.com/wangzheng422/docker_env/blob/master/redhat/ocp4/4.9/4.9.real-time.kernel.baicell.md)，来安装performance addon operator，并对集群进行一些配置。
+
 # helm chart
 
 打开openshift管理界面，点击左侧的开发者视图，然后点击添加，选择helm chart。
@@ -99,6 +103,10 @@ operator参数，默认的就好，不用修改。
 
 ![](imgs/2021-12-03-15-37-55.png)
 
+部署好以后，在部署拓扑图中，可以看到还是helm，但是被框在了operator里面。
+
+![](imgs/2021-12-03-19-59-26.png)
+
 ## 配置自定义operator hub源
 
 本软件在没有上架官方operator hub之前，是需要用自定义的operator hub源来导入的，以下是配置，注意其中的镜像，需要选取最新的，[镜像列表在这里](https://github.com/wangzheng422/baicell-helm-operator/pkgs/container/baicell-helm-operator)
@@ -115,7 +123,7 @@ spec:
   displayName: Baicell
   publisher: Baicell
   sourceType: grpc
-  image: ghcr.io/wangzheng422/baicell-helm-operator:catalog-2021-12-03-1051
+  image: ghcr.io/wangzheng422/baicell-helm-operator:catalog-2021-12-03-1136
   updateStrategy:
     registryPoll:
       interval: 10m
