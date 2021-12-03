@@ -36,15 +36,15 @@ jobs:
           helm repo index --url https://wangzheng422.github.io/baicell-helm-operator/ .
           cd ..
       
-      - name: Convert Markdown to HTML
-        uses: natescherer/markdown-to-html-with-github-style-action@v1.1.0
-        with:
-          path: README.md
-          outputpath: helm-repo
+      # - name: Convert Markdown to HTML
+      #   uses: natescherer/markdown-to-html-with-github-style-action@v1.1.0
+      #   with:
+      #     path: README.md
+      #     outputpath: helm-repo
       
-      - name: Run a multi-line script for rename html
-        run: |
-          mv helm-repo/README.html helm-repo/index.html
+      # - name: Run a multi-line script for rename html
+      #   run: |
+      #     mv helm-repo/README.html helm-repo/index.html
 
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
