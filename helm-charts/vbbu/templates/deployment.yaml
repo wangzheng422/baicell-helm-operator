@@ -5,7 +5,7 @@ metadata:
   labels:
     app: du-deployment1
 spec:
-  replicas: 1
+  replicas: {{ .Values.deploy.replicas}}
   selector:
     matchLabels:
       app: du-pod1
@@ -15,8 +15,18 @@ spec:
         app: du-pod1
       annotations:
         k8s.v1.cni.cncf.io/networks: {{ .Values.deploy.network | quote }}
-      cpu-load-balancing.crio.io: "true"
+      # cpu-load-balancing.crio.io: "true"
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - du-pod1
+              topologyKey: "kubernetes.io/hostname"
       runtimeClassName: {{ .Values.deploy.runtimeClassName }}
       containers:
       - name: du-container1
@@ -27,7 +37,7 @@ spec:
         env:
           - name: duNetProviderDriver
             value: "host-netdevice"
-        # command: ["/usr/sbin/init"]
+        command: ["/usr/sbin/init"]
         # - sleep
         # - infinity
         securityContext:
@@ -50,13 +60,13 @@ spec:
             mountPath: /baicell/lic
         resources:
           requests:
-            cpu: 14
-            memory: 64Gi
-            hugepages-1Gi: 16Gi
+            cpu: {{ .Values.deploy.cpu}}
+            memory: {{ .Values.deploy.memory }}
+            hugepages-1Gi: {{ .Values.deploy.hugepages_1Gi }}
           limits:
-            cpu: 14
-            memory: 64Gi
-            hugepages-1Gi: 16Gi
+            cpu: {{ .Values.deploy.cpu}}
+            memory: {{ .Values.deploy.memory }}
+            hugepages-1Gi: {{ .Values.deploy.hugepages_1Gi }}
       volumes:
         - name: hugepage
           emptyDir:
@@ -73,7 +83,7 @@ spec:
         - name: cache-volume
           emptyDir:
             medium: Memory
-            sizeLimit: 16Gi
+            sizeLimit: {{ .Values.deploy.cache_memory }}
         - name: license-volume
           configMap:
             name: license.for.baicell
