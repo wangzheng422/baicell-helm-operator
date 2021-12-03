@@ -66,5 +66,11 @@ rules:
   - network-attachment-definitions
   verbs:
   - '*'
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - '*'
 
 #+kubebuilder:scaffold:rules

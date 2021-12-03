@@ -115,7 +115,7 @@ spec:
   displayName: Baicell
   publisher: Baicell
   sourceType: grpc
-  image: ghcr.io/wangzheng422/baicell-helm-operator:catalog-2021-12-03-0823
+  image: ghcr.io/wangzheng422/baicell-helm-operator:catalog-2021-12-03-1051
   updateStrategy:
     registryPoll:
       interval: 10m
