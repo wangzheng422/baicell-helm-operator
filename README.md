@@ -2,6 +2,13 @@
 
 本项目是一个helm operator的演示项目，用来展现，如何在openshift中，是用helm chart, helm operator制作和部署应用。
 
+视频讲解:
+
+[<kbd><img src="imgs/2021-12-06-08-52-41.png" width="600"></kbd>](https://www.bilibili.com/video/BV1R44y1h7KQ/)
+
+- [bilibili](https://www.bilibili.com/video/BV1R44y1h7KQ/)
+- [youtube](https://youtu.be/mqycTYUbVHE)
+
 # 安装准备
 
 本项目预期在openshift之上，来安装vRAN应用，需要[参考这里](https://github.com/wangzheng422/docker_env/blob/master/redhat/ocp4/4.9/4.9.real-time.kernel.baicell.md)，来安装performance addon operator，并对集群进行一些配置。
