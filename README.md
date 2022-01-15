@@ -1,3 +1,4 @@
+[![CI](https://github.com/wangzheng422/baicell-helm-operator/actions/workflows/main.yml/badge.svg)](https://github.com/wangzheng422/baicell-helm-operator/actions/workflows/main.yml)
 # baicell-helm-operator
 
 本项目是一个helm operator的演示项目，用来展现，如何在openshift中，是用helm chart, helm operator制作和部署应用。
